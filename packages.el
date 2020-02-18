@@ -46,12 +46,14 @@
 (package! flycheck-rust)
 (package! pyvenv)
 (package! evil-terminal-cursor-changer)
-(package! pepita)
 (package! sbt-mode)
+
+;; for reading epubs
 (package! nov)
 (package! flymd)
 (package! emacs-jupyter)
 
+;; for note taking
 (package! org-roam :recipe
   (:host github
    :repo "jethrokuan/org-roam"
