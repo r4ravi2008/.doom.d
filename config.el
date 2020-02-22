@@ -72,11 +72,6 @@
         '(pyvenv-virtual-env-name ("[venv:" pyvenv-virtual-env-name "] ")))
   (pyvenv-mode +1))
 
-;; Enable mouse support
-(unless window-system
-  (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
-  (global-set-key (kbd "<mouse-5>") 'scroll-up-line))
-
 ;; For change evil cursor in tty mode
 (unless (display-graphic-p)
         (require 'evil-terminal-cursor-changer)
@@ -111,6 +106,8 @@
   :hook (scala-mode . lsp)
   :config (setq lsp-prefer-flymake nil))
 
+
+
 ;; add .epub files to run in nov-mode
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 
@@ -128,19 +125,19 @@
            (list "-a" "firefox" url))))
 (setq flymd-browser-open-function 'my-flymd-browser-function)
 
-(use-package org-roam
-  :after org
-  :hook
-  ((org-mode . org-roam-mode))
-  :custom
-  (org-roam-directory "~/gtd/")
-  :bind
-  ("C-c n l" . org-roam)
-  ("C-c n t" . org-roam-today)
-  ("C-c n f" . org-roam-find-file)
-  ("C-c n i" . org-roam-insert)
-  ("C-c n g" . org-roam-show-graph)
-)
+;; (use-package org-roam
+;;   :after org
+;;   :hook
+;;   ((org-mode . org-roam-mode))
+;;   :custom
+;;   (org-roam-directory "~/gtd/")
+;;   :bind
+;;   ("C-c n l" . org-roam)
+;;   ("C-c n t" . org-roam-today)
+;;   ("C-c n f" . org-roam-find-file)
+;;   ("C-c n i" . org-roam-insert)
+;;   ("C-c n g" . org-roam-show-graph)
+;;)
 
 (with-eval-after-load 'forge
  (push '("github.intuit.com" "github.intuit.com/api/v3"

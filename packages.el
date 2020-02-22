@@ -54,7 +54,10 @@
 (package! emacs-jupyter)
 
 ;; for note taking
-(package! org-roam :recipe
-  (:host github
-   :repo "jethrokuan/org-roam"
-   :branch "develop"))
+;; (package! org-roam :recipe
+;;   (:host github
+;;    :repo "jethrokuan/org-roam"
+;;    :branch "develop"))
+
+;; snippets
+(package! yasnippet-snippets)
