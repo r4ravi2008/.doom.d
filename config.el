@@ -25,7 +25,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. These are the defaults.
-(setq doom-theme 'doom-challenger-deep)
+(setq doom-theme 'doom-acario-dark)
 
 ;; If you intend to use org, it is recommended you change this!
 (setq org-directory "~/gtd/")
@@ -104,6 +104,9 @@
 (use-package lsp-mode
   ;; Optional - enable lsp-mode automatically in scala files
   :hook (scala-mode . lsp)
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-python-ms)
+                         (lsp)))
   :config (setq lsp-prefer-flymake nil))
 
 
@@ -125,19 +128,24 @@
            (list "-a" "firefox" url))))
 (setq flymd-browser-open-function 'my-flymd-browser-function)
 
-;; (use-package org-roam
-;;   :after org
-;;   :hook
-;;   ((org-mode . org-roam-mode))
-;;   :custom
-;;   (org-roam-directory "~/gtd/")
-;;   :bind
-;;   ("C-c n l" . org-roam)
-;;   ("C-c n t" . org-roam-today)
-;;   ("C-c n f" . org-roam-find-file)
-;;   ("C-c n i" . org-roam-insert)
-;;   ("C-c n g" . org-roam-show-graph)
-;;)
+;; ~/.doom.d/config.el
+(use-package! org-roam
+   :commands (org-roam-insert org-roam-find-file org-roam)
+   :init
+   (setq org-roam-directory "~/gtd/Notes")
+   (map! :leader
+         :prefix "n"
+         :desc "Org-Roam-Insert" "i" #'org-roam-insert
+         :desc "Org-Roam-Find"   "/" #'org-roam-find-file
+         :desc "Org-Roam-Buffer" "r" #'org-roam)
+   :config
+   (org-roam-mode +1))
+
+(use-package company-org-roam
+  :straight nil
+  :after org-roam company org
+  :config
+  (company-org-roam-init))
 
 (with-eval-after-load 'forge
  (push '("github.intuit.com" "github.intuit.com/api/v3"
@@ -145,3 +153,17 @@
         forge-alist)
  (setq epa-pinentry-mode 'loopback)
 )
+
+(after! lsp-ui
+  (setq lsp-ui-sideline-enable t)
+  (setq lsp-ui-sideline-show-hover t))
+;; Make underscore part of word in all buffers
+(modify-syntax-entry ?_ "w")
+
+(setq doom-scratch-buffer-major-mode 'org-mode)
+
+;; Deft settings
+(setq deft-extensions '("txt" "tex" "org"))
+(setq deft-directory "~/gtd")
+(setq deft-recursive t)
+
