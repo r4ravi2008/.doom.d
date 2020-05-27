@@ -104,15 +104,25 @@
 (use-package lsp-mode
   ;; Optional - enable lsp-mode automatically in scala files
   :hook (scala-mode . lsp)
-  :hook (python-mode . (lambda ()
-                         (require 'lsp-python-ms)
-                         (lsp)))
+  ;; :hook (python-mode . (lambda ()
+                         ;; (require 'lsp-python-ms)
+                         ;; (lsp)))
   :config (setq lsp-prefer-flymake nil))
 
 
 
 ;; add .epub files to run in nov-mode
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+
+;; the underscore to be recognized as word character
+(modify-syntax-entry ?_ "w")
+;; For language specific below examples can be found:
+;; For python
+;; (add-hook! 'python-mode-hook (modify-syntax-entry ?_ "w"))
+;; For ruby
+;; (add-hook! 'ruby-mode-hook (modify-syntax-entry ?_ "w"))
+;; For Javascript
+;; (add-hook! 'js2-mode-hook (modify-syntax-entry ?_ "w"))
 
 (defun my-nov-font-setup ()
   (face-remap-add-relative 'variable-pitch :family "Liberation Serif"
@@ -132,7 +142,7 @@
 (use-package! org-roam
    :commands (org-roam-insert org-roam-find-file org-roam)
    :init
-   (setq org-roam-directory "~/gtd/Notes")
+   (setq org-roam-directory "~/gtd")
    (map! :leader
          :prefix "n"
          :desc "Org-Roam-Insert" "i" #'org-roam-insert
@@ -142,16 +152,15 @@
    (org-roam-mode +1))
 
 (use-package company-org-roam
-  :straight nil
   :after org-roam company org
   :config
-  (company-org-roam-init))
+  (push 'company-org-roam company-backends))
 
 (with-eval-after-load 'forge
  (push '("github.intuit.com" "github.intuit.com/api/v3"
         "github.intuit.com" forge-github-repository)
         forge-alist)
- (setq epa-pinentry-mode 'loopback)
+ (setq epa-pinentry-mo 'loopback)
 )
 
 (after! lsp-ui
@@ -167,3 +176,23 @@
 (setq deft-directory "~/gtd")
 (setq deft-recursive t)
 
+;; disable copying to system clipboard
+;; (setq select-enable-clipboard nil)
+
+(after! persp-mode
+  (setq persp-emacsclient-init-frame-behaviour-override "main"))
+
+(menu-bar-mode -1)
+
+;; configure org-crypt
+
+(use-package org-crypt
+  :after org-mode
+  :config
+  (org-crypt-use-before-save-magic)
+  (setq org-crypt-key 615C4989B85D9D399C7D6D5A76A741FD7BD5DECC)
+  (setq org-tags-exclude-from-inheritance '("crypt")))
+
+;; (server-start)
+;; (require 'org-protocol)
+;; (require 'org-roam-protocol)

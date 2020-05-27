@@ -47,7 +47,7 @@
 (package! pyvenv)
 (package! evil-terminal-cursor-changer)
 (package! sbt-mode)
-
+(package! try)
 ;; for reading epubs
 (package! nov)
 (package! flymd)
@@ -61,4 +61,6 @@
 ;; snippets
 (package! yasnippet-snippets)
 
-(package! lsp-python-ms)
+(package! company-org-roam :recipe
+  (:host github :repo "org-roam/company-org-roam")
+)
