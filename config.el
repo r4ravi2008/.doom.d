@@ -140,22 +140,58 @@
 
 ;; ~/.doom.d/config.el
 (use-package! org-roam
-   :commands (org-roam-insert org-roam-find-file org-roam)
+   :commands (org-roam-insert org-roam-find-file org-roam org-roam-show-graph)
    :init
    (setq org-roam-directory "~/gtd")
    (map! :leader
          :prefix "n"
          :desc "Org-Roam-Insert" "i" #'org-roam-insert
          :desc "Org-Roam-Find"   "/" #'org-roam-find-file
+         :desc "Org-Roam-Show-Graph" "g" #'org-roam-show-graph
          :desc "Org-Roam-Buffer" "r" #'org-roam)
    :config
-   (org-roam-mode +1))
+(org-roam-mode +1)
+(require 'org-roam-protocol))
+(setq org-roam-link-title-format "R:%s")
+(setq org-roam-index-file "index.org")
+
+(defun my-org-protocol-focus-advice (orig &rest args)
+  (x-focus-frame nil)
+  (apply orig args))
+
+(advice-add 'org-roam-protocol-open-ref :around
+            #'my-org-protocol-focus-advice)
+(advice-add 'org-roam-protocol-open-file :around
+            #'my-org-protocol-focus-advice)
+
+(setq org-roam-ref-capture-templates
+        '(("r" "ref" plain (function org-roam--capture-get-point)
+           "%?"
+           :file-name "websites/${slug}"
+           :head "#+ROAM_KEY: ${ref}
+#+TITLE: ${title}
+
+- source :: ${ref}"
+           :unnarrowed t)))
+
+(setq org-roam-capture-templates
+        '(("d" "default" plain (function org-roam--capture-get-point)
+           "%?"
+           :file-name "${slug}"
+           :unnarrowed t)
+          ("p" "private" plain (function org-roam--capture-get-point)
+           "%?"
+           :file-name "private-${slug}"
+           :head "#+TITLE: ${title}\n"
+           :unnarrowed t)))
 
 (use-package company-org-roam
   :after org-roam company org
   :config
   (push 'company-org-roam company-backends))
 
+
+;; git forge stuff
 (with-eval-after-load 'forge
  (push '("github.intuit.com" "github.intuit.com/api/v3"
         "github.intuit.com" forge-github-repository)
