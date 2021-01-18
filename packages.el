@@ -54,7 +54,7 @@
 
 ;; for note taking
 (package! org-roam :recipe
-  (:host github
+ (:host github
    :repo "jethrokuan/org-roam"
    :branch "master"))
 
@@ -64,3 +64,18 @@
 (package! company-org-roam :recipe
   (:host github :repo "org-roam/company-org-roam")
 )
+
+(package! git-link :recipe
+  (:host github :repo "sshaw/git-link")
+)
+
+(package! browse-at-remote :recipe
+  (:host github :repo "rmuslimov/browse-at-remote")
+)
+
+(package! ob-restclient.el :recipe
+  (:host github :repo "alf/ob-restclient.el"))
+
+(package! restclient)
+
+(package! company-restclient)

@@ -25,7 +25,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. These are the defaults.
-(setq doom-theme 'doom-acario-dark)
+(setq doom-theme 'doom-palenight)
 
 ;; If you intend to use org, it is recommended you change this!
 (setq org-directory "~/gtd/")
@@ -232,3 +232,26 @@
 ;; (server-start)
 ;; (require 'org-protocol)
 ;; (require 'org-roam-protocol)
+
+
+;; configur rest client
+;;
+(use-package restclient
+  :after org-mode)
+(use-package ob-restclient.el
+  :after org-mode
+  :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((restclient . t))))
+
+;; create custom binding for inserting current date and time without user prompt
+(defun insert-timestamp-custom ()
+  "Insert current timestamp at point"
+  (interactive)
+  (insert (format-time-string (org-time-stamp-format 'long 'inactive)
+                                (org-current-effective-time))))
+(map! :leader
+      (:prefix-map("z" . "custom-bindings")
+       (:prefix ("t" . "current timestamp")
+        :desc "Insert current timestamp" "." 'insert-timestamp-custom)))

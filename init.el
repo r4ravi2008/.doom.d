@@ -40,7 +40,7 @@
        (popup            ; tame sudden yet inevitable temporary windows
         +all             ; catch all popups that start with an asterix
         +defaults)       ; default popup rules
-       pretty-code       ; replace bits of code with pretty symbols
+       ;;pretty-code       ; replace bits of code with pretty symbols
        ;;tabs              ; an tab bar for Emacs
        treemacs          ; a project drawer, like neotree but cooler
        unicode           ; extended unicode support for various languages
@@ -54,7 +54,7 @@
        (evil +everywhere); come to the dark side, we have cookies
        file-templates    ; auto-snippets for empty files
        fold              ; (nigh) universal code folding
-       (format +onsave)  ; automated prettiness
+       (format)  ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
        ;;lispy             ; vim for lisp, for people who don't like vim
        multiple-cursors  ; editing in many places at once
@@ -124,7 +124,7 @@
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ;
        (java
-        +meghanada
+       ;;+meghanada
         +lsp) ; the poster child for carpal tunnel syndrome
        javascript        ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
@@ -142,7 +142,7 @@
         +dragndrop       ; drag & drop files/images into org buffers
         +hugo            ; use Emacs for hugo blogging
         ;;+jupyter        ; ipython/jupyter support for babel
-        ;;+pandoc          ; export-with-pandoc support
+        +pandoc          ; export-with-pandoc support
         ;;+pomodoro        ; be fruitful with the tomato technique
         +present)        ; using org-mode for presentations
        ;;perl              ; write code no one else can comprehend
@@ -158,7 +158,8 @@
        ;;rst               ; ReST in peace
        ;;ruby              ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
-       scala             ; java, but good
+       (scala             ; java, but good
+        +lsp)
        ;;scheme            ; a fully conniving family of lisps
        sh                ; she sells {ba,z,fi}sh shells on the C xor
        ;;solidity          ; do you need a blockchain? No.
