@@ -255,3 +255,25 @@
       (:prefix-map("z" . "custom-bindings")
        (:prefix ("t" . "current timestamp")
         :desc "Insert current timestamp" "." 'insert-timestamp-custom)))
+
+
+;; Use prettier for node projects
+(defun zdx/use-prettier-if-in-node-modules ()
+  "Enable prettier-js-mode iff prettier was found installed locally in project"
+  (interactive)
+  (let* ((file-name (or (buffer-file-name) default-directory))
+         (root (locate-dominating-file file-name "node_modules"))
+         (prettier (and root
+                        (expand-file-name "node_modules/prettier/bin-prettier.js" root))))
+    (if (and prettier (file-executable-p prettier))
+        (progn
+          (message "Found local prettier executable at %s. Enabling prettier-js-mode" prettier)
+          (setq prettier-js-command prettier)
+          (make-variable-buffer-local 'prettier-js-command)
+          (prettier-js-mode)
+          (message "Disabling aggressive-indent-mode in favour of prettier")
+          (aggressive-indent-mode -1))
+      (progn
+        (message "Prettier not found in %s. Not enabling prettier-js-mode" root)
+        (message "Falling back to aggressive-indent-mode")
+        (aggressive-indent-mode 1)))))

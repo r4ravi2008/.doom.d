@@ -79,3 +79,9 @@
 (package! restclient)
 
 (package! company-restclient)
+
+(package! prettier-js)
+
+(package! aggressive-indent-mode)
+
+(package! swift-mode)
