@@ -25,7 +25,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. These are the defaults.
-(setq doom-theme 'doom-palenight)
+(setq doom-theme 'doom-acario-dark)
 
 ;; If you intend to use org, it is recommended you change this!
 (setq org-directory "~/gtd/")
@@ -143,16 +143,11 @@
    :commands (org-roam-insert org-roam-find-file org-roam org-roam-show-graph)
    :init
    (setq org-roam-directory "~/gtd")
-   (map! :leader
-         :prefix "n"
-         :desc "Org-Roam-Insert" "i" #'org-roam-insert
-         :desc "Org-Roam-Find"   "/" #'org-roam-find-file
-         :desc "Org-Roam-Show-Graph" "g" #'org-roam-show-graph
-         :desc "Org-Roam-Buffer" "r" #'org-roam)
    :config
-(org-roam-mode +1)
-(require 'org-roam-protocol))
-(setq org-roam-link-title-format "R:%s")
+   (org-roam-mode +1)
+   (require 'org-roam-protocol))
+
+(setq org-roam-link-title-format "%s")
 (setq org-roam-index-file "index.org")
 
 (defun my-org-protocol-focus-advice (orig &rest args)
@@ -170,19 +165,7 @@
            :file-name "websites/${slug}"
            :head "#+ROAM_KEY: ${ref}
 #+TITLE: ${title}
-
 - source :: ${ref}"
-           :unnarrowed t)))
-
-(setq org-roam-capture-templates
-        '(("d" "default" plain (function org-roam--capture-get-point)
-           "%?"
-           :file-name "${slug}"
-           :unnarrowed t)
-          ("p" "private" plain (function org-roam--capture-get-point)
-           "%?"
-           :file-name "private-${slug}"
-           :head "#+TITLE: ${title}\n"
            :unnarrowed t)))
 
 (use-package company-org-roam
@@ -190,6 +173,7 @@
   :config
   (push 'company-org-roam company-backends))
 
+(setq org-roam-completion-ignore-case t)
 
 ;; git forge stuff
 (with-eval-after-load 'forge
@@ -277,3 +261,33 @@
         (message "Prettier not found in %s. Not enabling prettier-js-mode" root)
         (message "Falling back to aggressive-indent-mode")
         (aggressive-indent-mode 1)))))
+
+(map! :leader
+      (:prefix-map("z" . "custom-bindings")
+        :desc "Insert current timestamp" "e" 'eshell))
+
+(defun eshell-here ()
+      "Opens up a new shell in the directory associated with the
+    current buffer's file. The eshell is renamed to match that
+    directory to make multiple eshell windows easier."
+      (interactive)
+      (let* ((parent (if (buffer-file-name)
+                         (file-name-directory (buffer-file-name))
+                       default-directory))
+             (height (/ (window-total-height) 3))
+             (name   (car (last (split-string parent "/" t)))))
+        (split-window-vertically (- height))
+        (other-window 1)
+        (eshell "new")
+        (rename-buffer (concat "*eshell: " name "*"))
+
+        (insert (concat "ls"))
+        (eshell-send-input)))
+(map! :leader
+      (:prefix-map("z" . "custom-bindings")
+        :desc "Insert current timestamp" "z" 'eshell-here))
+
+(use-package! nroam
+  :after org-roam
+  :config
+  (add-hook! 'org-mode-hook #'nroam-setup-maybe))

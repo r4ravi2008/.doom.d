@@ -52,12 +52,6 @@
 (package! nov)
 (package! flymd)
 
-;; for note taking
-(package! org-roam :recipe
- (:host github
-   :repo "jethrokuan/org-roam"
-   :branch "master"))
-
 ;; snippets
 (package! yasnippet-snippets)
 
@@ -82,6 +76,9 @@
 
 (package! prettier-js)
 
-(package! aggressive-indent-mode)
+;;(package! aggressive-indent-mode)
 
-(package! swift-mode)
+;;(package! swift-mode)
+(package! nroam)
+
+(package! react-snippets)
