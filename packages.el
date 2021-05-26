@@ -79,3 +79,5 @@
 (package! nroam)
 
 (package! react-snippets)
+
+(package! ob-ammonite)
