@@ -42,12 +42,9 @@
 ;; our package manager can't deal with; see raxod502/straight.el#279)
 ;(package! builtin-package :recipe (:branch "develop"))
 
-(package! flycheck)
-(package! flycheck-rust)
 (package! pyvenv)
 (package! evil-terminal-cursor-changer)
 (package! sbt-mode)
-(package! try)
 ;; for reading epubs
 (package! nov)
 (package! flymd)

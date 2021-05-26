@@ -58,10 +58,6 @@
 (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
 (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
 
-(use-package flycheck
-  :hook (prog-mode . flycheck-mode))
-(use-package flycheck-rust
-  :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 (global-auto-revert-mode t)
 
 (setq python-shell-interpreter "python3")
