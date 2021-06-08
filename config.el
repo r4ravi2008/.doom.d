@@ -25,7 +25,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. These are the defaults.
-(setq doom-theme 'doom-acario-dark)
+(setq doom-theme 'doom-dark+)
 
 ;; If you intend to use org, it is recommended you change this!
 (setq org-directory "~/gtd/")
@@ -100,6 +100,7 @@
 (use-package lsp-mode
   ;; Optional - enable lsp-mode automatically in scala files
   :hook (scala-mode . lsp)
+        (lsp-mode . lsp-lens-mode)
   ;; :hook (python-mode . (lambda ()
                          ;; (require 'lsp-python-ms)
                          ;; (lsp)))
@@ -349,7 +350,7 @@ same directory as the org-buffer and insert a link to this file."
         (concat
          (make-temp-name
           (concat (file-name-nondirectory (buffer-file-name))
-                  "_imgs/"
+                  "_files/"
                   (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
   (unless (file-exists-p (file-name-directory filename))
     (make-directory (file-name-directory filename)))
@@ -362,3 +363,11 @@ same directory as the org-buffer and insert a link to this file."
         "\n#+ATTR_ORG: :width 200\n[[file:" filename "]]\n\n"))
   )
 )
+
+(setq ob-ammonite-prompt-str "scala>")
+
+;; https://emacs.stackexchange.com/questions/17990/speeding-up-company-mode
+(setq company-dabbrev-downcase 0)
+(setq company-idle-delay 0)
+
+(setq jiralib-url "https://jira.intuit.com")

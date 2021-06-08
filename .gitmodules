@@ -1,0 +1,3 @@
+[submodule "aws-snippets"]
+	path = aws-snippets
+	url = https://github.com/baron42bba/aws-snippets.git
