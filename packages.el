@@ -80,4 +80,4 @@
 
 (package! react-snippets)
 
-(package! org-jira)
+(package! ob-ammonite)
