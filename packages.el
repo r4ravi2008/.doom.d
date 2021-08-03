@@ -44,7 +44,7 @@
 
 (package! pyvenv)
 (package! evil-terminal-cursor-changer)
-(package! sbt-mode)
+;; (package! sbt-mode)
 ;; for reading epubs
 (package! nov)
 (package! flymd)
@@ -76,8 +76,10 @@
 ;;(package! aggressive-indent-mode)
 
 ;;(package! swift-mode)
-(package! nroam)
+;; (package! nroam)
 
 (package! react-snippets)
 
 (package! ob-ammonite)
+(package! ranger)
+;; (package! org-jira)

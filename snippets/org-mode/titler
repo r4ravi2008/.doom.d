@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Create title
+# key: <tt
+# --
+#+title: ${1:title}
+#+roam_tags: ${2:roamtags}
+$0

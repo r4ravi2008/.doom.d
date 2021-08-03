@@ -135,42 +135,15 @@
            (list "-a" "firefox" url))))
 (setq flymd-browser-open-function 'my-flymd-browser-function)
 
-;; ~/.doom.d/config.el
+;; org-roam stuff
 (use-package! org-roam
-   :commands (org-roam-insert org-roam-find-file org-roam org-roam-show-graph)
    :init
-   (setq org-roam-directory "~/gtd")
-   :config
-   (org-roam-mode +1)
-   (require 'org-roam-protocol))
-
-(setq org-roam-link-title-format "%s")
-(setq org-roam-index-file "index.org")
-
-(defun my-org-protocol-focus-advice (orig &rest args)
-  (x-focus-frame nil)
-  (apply orig args))
-
-(advice-add 'org-roam-protocol-open-ref :around
-            #'my-org-protocol-focus-advice)
-(advice-add 'org-roam-protocol-open-file :around
-            #'my-org-protocol-focus-advice)
-
-(setq org-roam-ref-capture-templates
-        '(("r" "ref" plain (function org-roam--capture-get-point)
-           "%?"
-           :file-name "websites/${slug}"
-           :head "#+ROAM_KEY: ${ref}
-#+TITLE: ${title}
-- source :: ${ref}"
-           :unnarrowed t)))
-
-(use-package company-org-roam
+   (setq org-roam-directory "~/gtd"))
+(use-package! company-org-roam
   :after org-roam company org
   :config
   (push 'company-org-roam company-backends))
-
-(setq org-roam-completion-ignore-case t)
+(setq org-roam-completion-everywhere t)
 
 ;; git forge stuff
 (with-eval-after-load 'forge
@@ -210,13 +183,8 @@
   (setq org-crypt-key 615C4989B85D9D399C7D6D5A76A741FD7BD5DECC)
   (setq org-tags-exclude-from-inheritance '("crypt")))
 
-;; (server-start)
-;; (require 'org-protocol)
-;; (require 'org-roam-protocol)
-
 
 ;; configur rest client
-;;
 (use-package restclient
   :after org-mode)
 (use-package ob-restclient.el
@@ -284,68 +252,14 @@
       (:prefix-map("z" . "custom-bindings")
         :desc "Insert current timestamp" "z" 'eshell-here))
 
-(use-package! nroam
-  :after org-roam
-  :config
-  (add-hook! 'org-mode-hook #'nroam-setup-maybe))
-
-;; Lets you copy file link for org - mode for inserting screenshots
-(defun kym/dired-copy-images-links ()
-  "Works only in dired-mode, put in kill-ring,
-ready to be yanked in some other org-mode file,
-the links of marked image files using file-name-base as #+CAPTION.
-If no file marked then do it on all images files of directory.
-No file is moved nor copied anywhere.
-This is intended to be used with org-redisplay-inline-images."
-  (interactive)
-  (if (derived-mode-p 'dired-mode)                           ; if we are in dired-mode
-      (let* ((marked-files (dired-get-marked-files))         ; get marked file list
-             (number-marked-files                            ; store number of marked files
-              (string-to-number                              ; as a number
-               (dired-number-of-marked-files))))             ; for later reference
-        (when (= number-marked-files 0)                      ; if none marked then
-          (dired-toggle-marks)                               ; mark all files
-          (setq marked-files (dired-get-marked-files)))      ; get marked file list
-        (message "Files marked for copy")                    ; info message
-        (dired-number-of-marked-files)                       ; marked files info
-        (kill-new "\n")                                      ; start with a newline
-        (dolist (marked-file marked-files)                   ; walk the marked files list
-          (when (org-file-image-p marked-file)               ; only on image files
-            (kill-append                                     ; append image to kill-ring
-             (concat "#+CAPTION: "                           ; as caption,
-                     (file-name-base marked-file)            ; use file-name-base
-                     "\n#+ATTR_ORG: :width 200\n[[file:" marked-file "]]\n\n") nil))) ; link to marked-file
-        (when (= number-marked-files 0)                      ; if none were marked then
-          (dired-toggle-marks)))                             ; unmark all
-    (message "Error: Does not work outside dired-mode")      ; can't work not in dired-mode
-    (ding)))
-
-(defun org-take-screenshot ()
-  "Take a screenshot into a time stamped unique-named file in the
-same directory as the org-buffer and insert a link to this file."
-  (interactive)
-  (org-display-inline-images)
-  (setq filename
-        (concat
-         (make-temp-name
-          (concat (file-name-nondirectory (buffer-file-name))
-               [[file:functors.org_imgs/20210520_013256_FGvj0Z.png]]   "_imgs/"
-                  (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
-  (unless (file-exists-p (file-name-directory filename))
-    (make-directory (file-name-directory filename)))
-  ; take screenshot
-  (if (eq system-type 'darwin)
-      (call-process "screencapture" nil nil nil "-i" filename))
-  (if (eq system-type 'gnu/linux)
-      (call-process "import" nil nil nil filename))
-  ; insert into file if correctly taken
-  (if (file-exists-p filename)
-    (insert (concat "[[file:" filename "]]"))))
+;; (use-package! nroam
+;;   :after org-roam
+;;   :config
+;;   (add-hook! 'org-mode-hook #'nroam-setup-maybe))
 
 (defun org-insert-clipboard-image ()
   "Insert clipboard image using pngpaste command. Need pngpaste command installed as a prereq"
   (interactive)
-  (org-display-inline-images)
   (setq filename
         (concat
          (make-temp-name
@@ -360,8 +274,9 @@ same directory as the org-buffer and insert a link to this file."
     (insert
     (concat "#+CAPTION: "
         (file-name-base filename)
-        "\n#+ATTR_ORG: :width 200\n[[file:" filename "]]\n\n"))
+        "\n#+ATTR_ORG: :width 800\n[[file:" filename "]]\n\n"))
   )
+  (org-display-inline-images)
 )
 
 (setq ob-ammonite-prompt-str "scala>")
@@ -370,4 +285,11 @@ same directory as the org-buffer and insert a link to this file."
 (setq company-dabbrev-downcase 0)
 (setq company-idle-delay 0)
 
-(setq jiralib-url "https://jira.intuit.com")
+(setq jiralib-url "https://jiraprf.intuit.com")
+
+(map! :gv "C-j" 'drag-stuff-down)
+(map! :gv "C-k" 'drag-stuff-up)
+
+(map! :gv "C-;" 'evil-avy-goto-char)
+
+(map! :gv "C-'" 'swiper-avy)
