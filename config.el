@@ -25,8 +25,8 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. These are the defaults.
-(setq doom-theme 'doom-dark+)
 
+(setq doom-theme 'doom-one)
 ;; If you intend to use org, it is recommended you change this!
 (setq org-directory "~/gtd/")
 (setq org-agenda-files (directory-files-recursively "~/gtd/" "\.org$"))
@@ -139,10 +139,7 @@
 (use-package! org-roam
    :init
    (setq org-roam-directory "~/gtd"))
-(use-package! company-org-roam
-  :after org-roam company org
-  :config
-  (push 'company-org-roam company-backends))
+
 (setq org-roam-completion-everywhere t)
 
 ;; git forge stuff
@@ -258,8 +255,7 @@
 ;;   (add-hook! 'org-mode-hook #'nroam-setup-maybe))
 
 (defun org-insert-clipboard-image ()
-  "Insert clipboard image using pngpaste command. Need pngpaste command installed as a prereq"
-  (interactive)
+  "Insert clipboard image using pngpaste command. Need pngpaste command installed as a prereq" (interactive)
   (setq filename
         (concat
          (make-temp-name

@@ -52,10 +52,6 @@
 ;; snippets
 (package! yasnippet-snippets)
 
-(package! company-org-roam :recipe
-  (:host github :repo "org-roam/company-org-roam")
-)
-
 (package! git-link :recipe
   (:host github :repo "sshaw/git-link")
 )
@@ -83,3 +79,7 @@
 (package! ob-ammonite)
 (package! ranger)
 ;; (package! org-jira)
+
+(package! websocket)
+(package! simple-httpd)
+(package! org-roam-ui :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
