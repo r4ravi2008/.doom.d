@@ -9,8 +9,7 @@
 (setq user-full-name "Ravi"
       user-mail-address "r4ravi2008@gmail.com")
 
-;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
-;; are the three important ones:
+;; Doom exposes five (optional) variables for controlling fonts in Doom. Here are the three important ones:
 ;;
 ;; + `doom-font'
 ;; + `doom-variable-pitch-font'
@@ -289,3 +288,21 @@
 (map! :gv "C-;" 'evil-avy-goto-char)
 
 (map! :gv "C-'" 'swiper-avy)
+
+(setq +org-roam-open-buffer-on-find-file nil)
+(setq org-startup-folded nil)
+
+(use-package! websocket
+    :after org-roam)
+
+(use-package! org-roam-ui
+    :after org-roam ;; or :after org
+;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+;;         a hookable mode anymore, you're advised to pick something yourself
+;;         if you don't care about startup time, use
+;;  :hook (after-init . org-roam-ui-mode)
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))
