@@ -66,3 +66,5 @@
 (package! company-restclient)
 (package! magit-gh-pulls)
 (package! pyenv-mode)
+
+(package! leetcode)

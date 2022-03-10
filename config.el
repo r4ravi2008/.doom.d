@@ -197,3 +197,10 @@
 
 (setq org-startup-with-inline-images t)
 (setq org-startup-folded nil)
+
+;; scala setup
+(setq lsp-verify-signature nil)
+
+(setq leetcode-prefer-language "java")
+(setq leetcode-save-solutions t)
+(setq leetcode-directory "~/leetcode")
