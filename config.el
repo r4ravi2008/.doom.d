@@ -204,3 +204,10 @@
 (setq leetcode-prefer-language "java")
 (setq leetcode-save-solutions t)
 (setq leetcode-directory "~/leetcode")
+
+(setq +format-on-save-enabled-modes
+      '(not emacs-lisp-mode  ; elisp's mechanisms are good enough
+            sql-mode         ; sqlformat is currently broken
+            yaml-mode
+            nxml-mode
+            xml-mode))
