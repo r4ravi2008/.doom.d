@@ -1,0 +1,4 @@
+# key: pln
+# name: println
+# --
+println(s\"$0\")
