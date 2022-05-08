@@ -51,12 +51,10 @@
 
 (package! yasnippet-snippets)
 (package! git-link :recipe
-  (:host github :repo "sshaw/git-link")
-)
+  (:host github :repo "sshaw/git-link"))
 
 (package! browse-at-remote :recipe
-  (:host github :repo "rmuslimov/browse-at-remote")
-)
+  (:host github :repo "rmuslimov/browse-at-remote"))
 
 (package! ob-restclient.el :recipe
   (:host github :repo "alf/ob-restclient.el"))
@@ -68,3 +66,10 @@
 (package! pyenv-mode)
 
 (package! leetcode)
+
+(package! nixpkgs-fmt)
+(package! exec-path-from-shell)
+
+(package! copilot :recipe
+  (:host github :repo "zerolfx/copilot.el"
+   :files ("dist" "copilot.el")))

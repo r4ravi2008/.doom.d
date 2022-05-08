@@ -127,14 +127,21 @@
                                 (org-current-effective-time))))
 (map! :leader
       (:prefix-map("z" . "custom-bindings")
-       (:prefix ("t" . "current timestamp")
-        :desc "Insert current timestamp" "." 'insert-timestamp-custom)))
+        :desc "Insert current timestamp" "t" 'insert-timestamp-custom))
 
-
-;; EShell stuff
 (map! :leader
       (:prefix-map("z" . "custom-bindings")
-        :desc "Open EShell" "e" 'eshell))
+        :desc "leetcode-try" "t" 'leetcode-try))
+
+(defun leetcode-and-view-problem()
+  (interactive)
+  (leetcode)
+)
+
+(map! :leader
+      (:prefix-map("z" . "custom-bindings")
+        :desc "leetcode-view-problem" "" 'leetcode-and-view-problem))
+
 
 (defun eshell-here ()
       "Opens up a new shell in the directory associated with the
@@ -155,7 +162,7 @@
         (eshell-send-input)))
 (map! :leader
       (:prefix-map("z" . "custom-bindings")
-        :desc "Insert current timestamp" "z" 'eshell-here))
+        :desc "open eshell-here" "z" 'eshell-here))
 
 ;; (use-package! nroam
 ;;   :after org-roam
@@ -211,3 +218,36 @@
             yaml-mode
             nxml-mode
             xml-mode))
+;;(add-to-list 'lsp-language-id-configuration '(nix-mode . "nix"))
+;; (lsp-register-client
+;;  (make-lsp-client :new-connection (lsp-stdio-connection '("rnix-lsp"))
+;;                   :major-modes '(nix-mode)
+;;                   :server-id 'nix))
+
+;; (add-hook! 'nix-mode-hook 'nixpkgs-fmt-buffer)
+
+;; (exec-path-from-shell-initialize)
+
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
+;; (add-hook 'prog-mode-hook 'copilot-mode)
+
+;; (customize-set-variable 'copilot-enable-predicates '(evil-insert-state-p))
+
+; complete by copilot first, then company-mode
+;; (defun my-tab ()
+;;   (interactive)
+;;   (or (copilot-accept-completion)
+;;       (company-indent-or-complete-common nil)))
+
+;; ;
+;; modify company-mode behaviors
+;; (with-eval-after-load 'company
+  ; disable inline previews
+  ;; (delq 'company-preview-if-just-one-frontend company-frontends)
+  ; enable tab completion
+  ;; (define-key company-mode-map (kbd "<tab>") 'my-tab)
+  ;; (define-key company-mode-map (kbd "TAB") 'my-tab)
+  ;; (define-key company-active-map (kbd "<tab>") 'my-tab)
+  ;; (define-key company-active-map (kbd "TAB") 'my-tab))
