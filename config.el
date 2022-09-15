@@ -127,7 +127,7 @@
                                 (org-current-effective-time))))
 (map! :leader
       (:prefix-map("z" . "custom-bindings")
-        :desc "Insert current timestamp" "t" 'insert-timestamp-custom))
+        :desc "Insert current timestamp" "i" 'insert-timestamp-custom))
 
 (map! :leader
       (:prefix-map("z" . "custom-bindings")
@@ -141,7 +141,6 @@
 (map! :leader
       (:prefix-map("z" . "custom-bindings")
         :desc "leetcode-view-problem" "" 'leetcode-and-view-problem))
-
 
 (defun eshell-here ()
       "Opens up a new shell in the directory associated with the
@@ -230,6 +229,7 @@
 
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
+
 
 ;; (add-hook 'prog-mode-hook 'copilot-mode)
 
